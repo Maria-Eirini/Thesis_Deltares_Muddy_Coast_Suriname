@@ -1,0 +1,51 @@
+PROJ 'Mud Streaming' '001' &
+'BioManCO' &
+'Case - Calibration' & 
+'Calibrate model to field measurements'
+$
+  MODE STA ONED
+$
+  SET LEVEL 		= 0.
+  SET DEPMIN 		= 0.
+ $ SET rho 		    = 1000
+  SET NAUT
+$
+$ CGRID xpc ypc alpc xlenc ylenc  mxc myc CIR mdC   flow    fhigh   msc
+  CGRID  0.  0.  0. 4000.  0.    500  0  CIR    80   0.01      1.0  	24
+
+$ 
+$ INPGRID BOTTOM xpinp ypinp alpinp   mxinp myinp   dxinp   dyinp
+  INPGRID BOTTOM   0.    0.    0.     1     0    4000.    0.
+  READINP BOTTOM  1. 'calibration_bot.bot' 4 0 FREE
+  INPGRID MUDL     0     0.    0.     1     0    4000.     0.
+  READINP MUDL    1. 'calibration_mud.bot' 4 0 FREE
+
+  
+$
+  BOUN SHAPE BIN PEAK DSPR POWER
+$
+$ BOUN SIDE W CCW CON PAR hs per dir dd
+  BOUN SIDE W CCW CON PAR 0.5 8 270. 300
+$
+$ DO USE MUD also for no-mud simulations, AS IT WILL WRITE K TO S1D FILE
+ MUD alpha=1.0 rhom=1400 rho0=1000 nu=0.001 disperr=3 disperi=3 source=3 cg=1
+$
+  NUM ACCUR   0.020    0.020    0.020   100.000   5   
+$
+  GEN3
+  FRICTION JONSWAP 0
+  OFF WINDG
+  OFF QUAD		
+  OFF WCAP
+  OFF BREAK
+  OFF REF
+  OFF FSH
+$
+CURVE  'GAUGE' 0. 0. 4000 4000. 0.
+TABLE  'GAUGE' HEAD   'calibration.crv' XP YP DEP HSIGN KI WLENMR MUDL  &
+                              TM02 DISSIP DISMud DISSWcap DIR WLEN WLENMR RTP TM01
+							   
+SPEC   'GAUGE' SPEC1D 'calibration.s1d'
+$
+COMPUTE
+STOP 

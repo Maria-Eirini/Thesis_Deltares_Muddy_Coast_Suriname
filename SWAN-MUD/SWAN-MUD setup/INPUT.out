@@ -1,0 +1,43 @@
+
+ SWAN is preparing computation
+
+ PMUD     1.000000       1400.000       1000.000      1.0000000E-03
+  0.0000000E+00   3.000000       3.000000       3.000000       1.000000    
+  0.0000000E+00
+ Fluid mud is enabled, refer to:
+   * Kranenburg et al. (2010)
+     Journal of Hydraulic Engineering, 2010
+   * Kranenburg (2008)
+     http://repository.tudelft.nl/view/ir/
+      uuid%3A7644eb5b-0ec9-4190-9f72-ccd7b50cfc47/
+     with default parameter settings:
+ ALPHA             1.000000    
+ RHOM              1400.000    
+ RHO0              1000.000    
+ NU               1.0000000E-03
+ layer==f(x,y)    0.0000000E+00
+ disperr           3.000000    
+ disperi           3.000000    
+ source            3.000000    
+ cg                1.000000    
+ power            0.0000000E+00
+ iteration    1; sweep 1
+ Saved calculated mud dispersion relation to "MUDFile"
++iteration    1; sweep 2
++iteration    1; sweep 3
++iteration    1; sweep 4
+ accuracy OK in   0.20 % of wet grid points (100.00 % required)
+
+ iteration    2; sweep 1
++iteration    2; sweep 2
++iteration    2; sweep 3
++iteration    2; sweep 4
+ accuracy OK in 100.00 % of wet grid points (100.00 % required)
+
+ Frequency-averaged WLENMR + KI
+    calculated with power:            1
+ Frequency-averaged WLENMR + KI
+    calculated with power:            1
++SWAN is processing output request    1
++SWAN is processing output request    2
+ Neglected effect mud on k on presence currents

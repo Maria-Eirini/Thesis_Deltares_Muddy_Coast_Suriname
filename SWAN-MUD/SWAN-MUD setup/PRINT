@@ -1,0 +1,217 @@
+1
+
+                    Execution started at 20200626.111839         
+
+
+
+                    ---------------------------------------
+                                     SWAN
+                    SIMULATION OF WAVES IN NEAR SHORE AREAS
+                             VERSION NUMBER 40.61A.mud.IMSL     
+                    ---------------------------------------
+
+
+    
+ PROJ 'Mud Streaming' '001' &
+ 'BioManCO' &
+ 'Case - Calibration' &
+ 'Calibrate model to field measurements'
+    
+ $
+    
+   MODE STA ONED
+    
+ $
+    
+   SET LEVEL 		= 0.
+    
+   SET DEPMIN 		= 0.
+    
+  $ SET rho 		    = 1000
+    
+   SET NAUT
+    
+ $
+    
+ $ CGRID xpc ypc alpc xlenc ylenc  mxc myc CIR mdC   flow    fhigh   msc
+    
+   CGRID  0.  0.  0. 4000.  0.    500  0  CIR    80   0.01      1.0  	24
+ Resolution in sigma-space: df/f =  0.2115
+    
+ 
+    
+ $
+    
+ $ INPGRID BOTTOM xpinp ypinp alpinp   mxinp myinp   dxinp   dyinp
+    
+   INPGRID BOTTOM   0.    0.    0.     1     0    4000.    0.
+    
+   READINP BOTTOM  1. 'calibration_bot.bot' 4 0 FREE
+    
+   INPGRID MUDL     0     0.    0.     1     0    4000.     0.
+    
+   READINP MUDL    1. 'calibration_mud.bot' 4 0 FREE
+    
+ 
+    
+ 
+    
+ $
+    
+   BOUN SHAPE BIN PEAK DSPR POWER
+    
+ $
+    
+ $ BOUN SIDE W CCW CON PAR hs per dir dd
+    
+   BOUN SIDE W CCW CON PAR 0.5 8 270. 300
+    
+ $
+    
+ $ DO USE MUD also for no-mud simulations, AS IT WILL WRITE K TO S1D FILE
+    
+  MUD alpha=1.0 rhom=1400 rho0=1000 nu=0.001 disperr=3 disperi=3 source=3 cg=1
+    
+ $
+    
+   NUM ACCUR   0.020    0.020    0.020   100.000   5
+    
+ $
+    
+   GEN3
+    
+   FRICTION JONSWAP 0
+    
+   OFF WINDG
+    
+   OFF QUAD		
+    
+   OFF WCAP
+    
+   OFF BREAK
+    
+   OFF REF
+    
+   OFF FSH
+    
+ $
+    
+ CURVE  'GAUGE' 0. 0. 4000 4000. 0.
+    
+ TABLE  'GAUGE' HEAD   'calibration.crv' XP YP DEP HSIGN KI WLENMR MUDL  &
+                               TM02 DISSIP DISMud DISSWcap DIR WLEN WLENMR RTP TM01
+    
+ 							
+    
+ SPEC   'GAUGE' SPEC1D 'calibration.s1d'
+    
+ $
+    
+ COMPUTE
+ ** Warning          : Limiter is de-activated in case of no quadruplets
+
+----------------------------------------------------------------
+                  COMPUTATIONAL PART OF SWAN
+----------------------------------------------------------------
+
+ One-dimensional mode of SWAN is activated
+ Gridresolution       : MXC             501 MYC              1
+                      : MCGRD           502
+                      : MSC              25 MDC             80
+                      : MTC               1
+                      : NSTATC            0 ITERMX           5
+ Propagation flags    : ITFRE             0 IREFR            0
+ Source term flags    : IBOT              1 ISURF            0
+                      : IWCAP             0 IWIND            0
+                      : ITRIAD            0 IQUAD            0
+                      : IMUD              1
+ Spatial step         : DX       0.8000E+01 DY      0.8000E+01
+ Spectral bin         : df/f     0.2115E+00 DDIR    0.4500E+01
+ Physical constants   : GRAV     0.9810E+01 RHO     0.1025E+04
+ Wind input           : WSPEED   0.0000E+00 DIR     0.0000E+00
+ Tail parameters      : E(f)     0.4000E+01 E(k)    0.2500E+01
+                      : A(f)     0.5000E+01 A(k)    0.3000E+01
+ Accuracy parameters  : DREL     0.2000E-01 NPNTS   0.1000E+03
+                      : DHOVAL   0.2000E-01 DTOVAL  0.2000E-01
+                      : GRWMX    0.1000E+21
+ Drying/flooding      : LEVEL    0.0000E+00 DEPMIN  0.0000E+00
+ The nautical  convention for wind and wave directions is used
+ Scheme for geographic propagation is SORDUP
+ Scheme geogr. space  : PROPSC            2 ICMAX            5
+ Scheme freq. space   : CSS      0.5000E+00 CDD     0.5000E+00
+ Current is off
+ Quadruplets is off
+ Triads is off
+ JONSWAP (`73)        : GAMMA    0.0000E+00
+ Whitecapping is off
+ Surf breaking is off
+ Set-up is off
+ Diffraction is off
+ Janssen (`89,`90)    : ALPHA    0.1000E-01 KAPPA   0.4100E+00
+ Janssen (`89,`90)    : RHOA     0.1280E+01 RHOW    0.1025E+04
+ 
+ 1st and 2nd gen. wind: CF10     0.1880E+03 CF20    0.5900E+00
+                      : CF30     0.1200E+00 CF40    0.2500E+03
+                      : CF50     0.2300E-02 CF60   -0.2230E+00
+                      : CF70     0.0000E+00 CF80   -0.5600E+00
+                      : RHOAW    0.1249E-02 EDMLPM  0.3600E-02
+                      : CDRAG    0.1230E-02 UMIN    0.1000E+01
+                      : LIM_PM   0.1300E+00
+ 
+ iteration    1; sweep 1
+ iteration    1; sweep 2
+ iteration    1; sweep 3
+ iteration    1; sweep 4
+ accuracy OK in   0.20 % of wet grid points (100.00 % required)
+
+ iteration    2; sweep 1
+ iteration    2; sweep 2
+ iteration    2; sweep 3
+ iteration    2; sweep 4
+ accuracy OK in 100.00 % of wet grid points (100.00 % required)
+
+ 
+    
+ STOP
+
+
+  1 #
+  1 # Details on timings of the simulation:
+  1 #
+  1 #                          cpu-time wall-clock
+  1 #
+  1 #            total time:       3.02       3.05
+  1 #
+  1 #  total pre-processing:       0.03       0.02
+  1 #     total calculation:       0.92       0.94
+  1 #   total communication:       0.00       0.00
+  1 # total post-processing:       2.03       2.07
+  1 #
+  1 # Splitting up calc. + comm. times:
+  1 #
+  1 #     calc. propagation:       0.17       0.16
+  1 #       exchanging data:       0.00       0.00
+  1 #         calc. sources:       0.16       0.12
+  1 #        solving system:       0.05       0.05
+  1 #            reductions:       0.00       0.00
+  1 #       collecting data:       0.00       0.00
+  1 #           calc. setup:       0.00       0.00
+  1 #       other computing:       0.55       0.60
+  1 #
+  1 # Overview source contributions:
+  1 #
+  1 #      prop. velocities:       0.05       0.08
+  1 #         x-y advection:       0.12       0.07
+  1 #       sigma advection:       0.00       0.00
+  1 #       theta advection:       0.00       0.01
+  1 #                  wind:       0.00       0.01
+  1 #          whitecapping:       0.00       0.01
+  1 #       bottom friction:       0.06       0.02
+  1 #             fluid mud:       0.06       0.05
+  1 #         wave breaking:       0.00       0.00
+  1 #           quadruplets:       0.00       0.01
+  1 #                triads:       0.00       0.01
+  1 #               limiter:       0.02       0.00
+  1 #             rescaling:       0.00       0.02
+  1 #           reflections:       0.02       0.01
+  1 #           diffraction:       0.00       0.00
